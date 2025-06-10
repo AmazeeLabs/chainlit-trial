@@ -16,8 +16,8 @@ from typing import cast
 
 embeddings = OpenAIEmbeddings(
     model="embeddings",  # use env variable
-    base_url=os.environ.get("AMAZEEAI_BASE_URL"),
-    api_key=cast(SecretStr, os.environ.get("AMAZEEAI_API_KEY")),
+    base_url=os.environ.get("AI_LLM_API_URL"),
+    api_key=cast(SecretStr, os.environ.get("AI_LLM_API_TOKEN")),
 )
 
 
@@ -25,8 +25,8 @@ class InMemoryFileStore:
     def __init__(self):
         self.embeddings = OpenAIEmbeddings(
             model="embeddings",
-            base_url=os.environ.get("AMAZEEAI_BASE_URL"),
-            api_key=cast(SecretStr, os.environ.get("AMAZEEAI_API_KEY")),
+            base_url=os.environ.get("AI_LLM_API_URL"),
+            api_key=cast(SecretStr, os.environ.get("AI_LLM_API_TOKEN")),
         )
         self.text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,
