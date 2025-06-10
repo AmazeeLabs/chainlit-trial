@@ -1,0 +1,37 @@
+x-environment: &default-environment
+  LAGOON_PROJECT: &lagoon-project ${COMPOSE_PROJECT_NAME:-chainlit}
+  LAGOON_ROUTE: &default-url http://${COMPOSE_PROJECT_NAME:-chainlit}.docker.amazee.io
+
+services:
+  chat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    labels:
+      lagoon.type: python-persistent
+      lagoon.persistent: /app/.files
+      lagoon.name: chat
+    ports:
+      - "8080"
+    environment:
+      <<: *default-environment
+      LAGOON_LOCALDEV_URL: chat-${COMPOSE_PROJECT_NAME:-chainlit}.docker.amazee.io
+      AMAZEEAI_API_KEY: "${AMAZEEAI_API_KEY}"
+      AMAZEEAI_BASE_URL: "${AMAZEEAI_BASE_URL}"
+    depends_on:
+      - chat-storage
+    networks:
+      - amazeeio-network
+      - default
+
+  chat-storage:
+    image: uselagoon/postgres-15:latest
+    labels:
+      lagoon.type: postgres
+    restart: "no"
+    ports:
+      - "5432"
+
+networks:
+  amazeeio-network:
+    external: true

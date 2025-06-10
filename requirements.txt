@@ -1,0 +1,6 @@
+chainlit
+openai
+langchain
+langchain_openai
+langgraph
+numpy
