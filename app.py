@@ -91,8 +91,8 @@ async def on_chat_start():
         ChatOpenAI(
             model="claude-3-5-sonnet",
             temperature=0,
-            base_url=os.environ.get("AMAZEEAI_BASE_URL"),
-            api_key=cast(SecretStr, os.environ.get("AMAZEEAI_API_KEY")),
+            base_url=os.environ.get("AI_LLM_API_URL"),
+            api_key=cast(SecretStr, os.environ.get("AI_LLM_API_TOKEN")),
         ),
         [],
         checkpointer=memory,
